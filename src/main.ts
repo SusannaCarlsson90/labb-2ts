@@ -1,6 +1,8 @@
 import './style.css'
 import { setupCounter } from './counter.ts'
 
+
+
 interface Todo { //Interface/mall för definiering av kontraktat
 task: string; //texten för uppgiften
 
@@ -14,6 +16,8 @@ class TodoList {
 
   constructor() { //Constructor som initierar todos-arrayen och laddar todos från LocalStorage vid skapandet av ett nytt ToDoList-objekt
     this.todos = []; 
+    //anropar local storage
+    this.loadFromLocalStorage();
   }
 
   //Metod för att lägga till en uppgift
@@ -28,9 +32,38 @@ class TodoList {
 
       //Skapar nytt objekt:
       this.todos.push(newTodo); //Stoppa in i listan
-      return: true;
+      this.saveToLocalStorage();
+      return true;
     } else {
       return false; //Om något var fel exempelvis ej ifylld text
     }
   }
 
+//Metod för att bocka av saker i listan
+markTodo(todoIndex:number): void {
+  this.todos[todoIndex].completed = true;
+  this.saveToLocalStorage(); 
+}
+
+//Metod för att kunna rita ut listan
+getTodos(): Todo[] {
+  return this.todos;
+}
+
+//Local storage 
+saveToLocalStorage(): void {
+ //Spara min lista (this.todos) under namnet TODOS
+  StorageUtility.setItem(StorageKeys.TODOS, this.todos);
+}
+
+loadFromLocalStorage(): void {
+  // Hämtar datan och berättar säger att vi vill ha en Todo-lista <Todo[]>
+  const savedData = StorageUtility.getItem<Todo[]>(StorageKeys.TODOS);
+
+  // Om något fanns sparat så fyller vi vår lista
+  if (savedData) {
+    this.todos = savedData;
+  }
+}
+}
+  
