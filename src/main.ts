@@ -67,4 +67,27 @@ loadFromLocalStorage(): void {
 }
 }
   
-const myTodoList = new TodoList();
+const myTodoList = new TodoList(); //Kör igång newTodoList
+
+//Hämtar mina html element med DOM 
+const taskInput = document.getElementById("taskInput") as HTMLInputElement;
+const priorityInput = document.getElementById("priorityInput") as HTMLSelectElement;
+const addBtn = document.getElementById("addBtn") as HTMLButtonElement;
+const errorMsg = document.getElementById("errorMsg") as HTMLParagraphElement;
+const todoList = document.getElementById("todoList") as HTMLUListElement;
+
+//Händelselyssnare för knapp
+addBtn.addEventListener("click", () => {
+  const task = taskInput.value; 
+const priority = Number(priorityInput.value); //Number så en siffra skickas med
+const success = myTodoList.addTodo(task, priority); //Anropar myTodoList, kör addTodo och skicka med priority och task
+if (success) {
+  error.Msg.style.display = "none"; //Göm felmeddelandet
+  taskInput:value = ""; //Töm rutan
+} else {
+  //Om det gick dåligt visa felmeddelandet
+  errorMsg.style.display = "block";
+}
+});
+
+
