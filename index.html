@@ -7,6 +7,31 @@
     <title>labb-2</title>
   </head>
   <body>
+    <main>
+      <h1>Att göra inför flytten!</h1>
+<section id="addTask">
+     <div> <h2>Skapa en ny uppgift</h2>
+      <input type="text" id="taskInput" placeholder="Vad ska göras?">
+
+      <select id="priorityInput">
+        <option value="1">Hög prioritet</option>
+        <option value="2">Medelhög prioritet</option>
+        <option value="3">Låg prioritet</option>
+      </select>
+
+      <button id="addBtn">Lägg till</button>
+      <p id="errorMsg" style="color: red; display: none;">Vänligen fyll i text och välj prioritet!</p>
+    </div>
+</section>
+    </section>
+
+    <section id="myTasks">
+      <h2>Min uppgifter</h2>
+      <ul id="todoList">
+
+      </ul>
+    </section>
+    </main>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

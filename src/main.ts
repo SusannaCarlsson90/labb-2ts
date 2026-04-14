@@ -67,3 +67,4 @@ loadFromLocalStorage(): void {
 }
 }
   
+const myTodoList = new TodoList();
