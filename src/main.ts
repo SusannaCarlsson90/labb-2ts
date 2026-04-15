@@ -1,5 +1,5 @@
 import './style.css'
-import { setupCounter } from './counter.ts'
+
 import { StorageUtility, StorageKeys } from "./utils/storage";
 
 
