@@ -40,9 +40,21 @@ class TodoList {
   }
 
 //Metod för att bocka av saker i listan
-markTodo(todoIndex:number): void {
+markTodoCompleted(todoIndex:number): void {
   this.todos[todoIndex].completed = true;
   this.saveToLocalStorage(); 
+}
+
+//Metod för att ångra (gör uppgiften ej avklarad igen)
+undoTodo(todoIndex: number): void {
+  this.todos[todoIndex].completed = false;
+  this.saveToLocalStorage();
+}
+
+//Metod för att radera en uppgift
+deleteTodo(todoIndex: number): void {
+  this.todos.splice(todoIndex, 1);
+  this.saveToLocalStorage();
 }
 
 //Metod för att kunna rita ut listan
@@ -100,21 +112,43 @@ todoList.innerHTML = "";
 todos.forEach((todo, index) => {
   //Skapa ett nytt li-element
   const li = document.createElement("li");
+  let buttonHtml = "";
+
   if (todo.completed) {
     li.classList.add("completed");
+    //Om klar visa ångra eller radera 
+    buttonHtml = `
+    <button class="undo-btn">Ångra</button>
+    <button class="delete-btn">Radera</button>
+  `; } else {
+    //Om ej klar visa ångra eller radera
+    buttonHtml = `
+      <button class="done-btn">Klar</button>
+      <button class="delete-btn">Radera</button>
+    `;
   }
   //Lägg in texten, prio och knapp för avklarad uppgift
   li.innerHTML = `
   <span>${todo.task} (Prio: ${todo.priority})</span>
-  <button class="done-btn">Klar</button>
+  <div class="button-group">
+  ${buttonHtml} 
+  </div>
 `;
-
-//Hämta knappen och lägg till händelselyssnare
-const doneBtn = li.querySelector(".done-btn") as HTMLButtonElement;
-doneBtn.addEventListener("click", () => {
-  myTodoList.markTodo(index);
+//Hämta knapparna och lägg till händelselyssnare
+li.querySelector(".done-btn")?.addEventListener("click", () => {
+  myTodoList.markTodoCompleted(index);
   printList();
-})
+});
+
+li.querySelector(".undo-btn")?.addEventListener("click", () => {
+  myTodoList.undoTodo(index);
+  printList();
+});
+
+li.querySelector(".delete-btn")?.addEventListener("click", () => {
+  myTodoList.deleteTodo(index);
+  printList();
+} );
   //Lägg till i min ul-lista
   todoList.appendChild(li);
 });
