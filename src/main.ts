@@ -1,6 +1,6 @@
 import './style.css'
 import { setupCounter } from './counter.ts'
-
+import { StorageUtility, StorageKeys } from "./utils/storage";
 
 
 interface Todo { //Interface/mall för definiering av kontraktat
@@ -67,7 +67,7 @@ loadFromLocalStorage(): void {
 }
 }
   
-const myTodoList = new TodoList(); //Kör igång newTodoList
+const myTodoList = new TodoList(); //Kör min constructor
 
 //Hämtar mina html element med DOM 
 const taskInput = document.getElementById("taskInput") as HTMLInputElement;
@@ -82,12 +82,42 @@ addBtn.addEventListener("click", () => {
 const priority = Number(priorityInput.value); //Number så en siffra skickas med
 const success = myTodoList.addTodo(task, priority); //Anropar myTodoList, kör addTodo och skicka med priority och task
 if (success) {
-  error.Msg.style.display = "none"; //Göm felmeddelandet
-  taskInput:value = ""; //Töm rutan
+  errorMsg.style.display = "none"; //Göm felmeddelandet
+  taskInput.value = ""; //Töm rutan
+  printList(); //Kör funktion för att skriva ut
 } else {
   //Om det gick dåligt visa felmeddelandet
   errorMsg.style.display = "block";
 }
 });
 
+function printList() {
+  //Hämtar alla todos från min klass
+const todos = myTodoList.getTodos();
+//Töm listan i html
+todoList.innerHTML = "";
+//Looopar varje todos i listan
+todos.forEach((todo, index) => {
+  //Skapa ett nytt li-element
+  const li = document.createElement("li");
+  if (todo.completed) {
+    li.classList.add("completed");
+  }
+  //Lägg in texten, prio och knapp för avklarad uppgift
+  li.innerHTML = `
+  <span>${todo.task} (Prio: ${todo.priority})</span>
+  <button class="done-btn">Klar</button>
+`;
 
+//Hämta knappen och lägg till händelselyssnare
+const doneBtn = li.querySelector(".done-btn") as HTMLButtonElement;
+doneBtn.addEventListener("click", () => {
+  myTodoList.markTodo(index);
+  printList();
+})
+  //Lägg till i min ul-lista
+  todoList.appendChild(li);
+});
+}
+
+printList();

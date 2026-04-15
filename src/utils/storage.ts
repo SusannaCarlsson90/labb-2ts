@@ -1,5 +1,7 @@
 //Kod från: https://medium.com/@mithileshparmar1/simplifying-local-storage-with-typescript-1ac866ed5f40 . Mina kommentarer för att förstå koden ordentligt
 
+
+
 const StorageKeys = { //Objekt som innehåller de namn (namnet i detta fall) som jag vill använda i minnet
   TODOS: 'TODOS',
 } as const;

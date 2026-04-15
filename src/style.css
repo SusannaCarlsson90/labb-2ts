@@ -32,3 +32,5 @@ main {
   flex-direction: column;
   max-width: 300px;
 }
+
+.completed span { text-decoration: line-through; }
