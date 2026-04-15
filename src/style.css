@@ -109,3 +109,26 @@ input, select, button {
       font-size: 1.7rem;
     
     }
+
+    @media (max-width: 600px) {
+      main {
+        width: 95%;
+        padding: 15px;
+      }
+
+      #todoList li {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+      }
+
+      .button-group {
+        widht: 100%;
+        justify-content: space-between;
+      }
+
+      .button-group button {
+        flex: 1;
+        padding: 15px;
+      }
+    }
