@@ -69,7 +69,7 @@ saveToLocalStorage(): void {
 }
 
 loadFromLocalStorage(): void {
-  // Hämtar datan och berättar säger att vi vill ha en Todo-lista <Todo[]>
+  // Hämtar datan och berättar att vi vill ha en Todo-lista <Todo[]>
   const savedData = StorageUtility.getItem<Todo[]>(StorageKeys.TODOS);
 
   // Om något fanns sparat så fyller vi vår lista
